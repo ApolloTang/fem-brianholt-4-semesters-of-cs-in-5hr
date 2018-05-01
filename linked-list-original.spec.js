@@ -32,20 +32,22 @@ class LinkedList {
     this.length = 0;
   }
   push(value) {
-    const tailNode_prev = this.tail
-    const node_new = new Node(value);
-    (!this.head)
-      ? this.head = node_new // first node which is the head
-      : tailNode_prev.next = node_new; // already has node, last node now point to new node
-    this.tail = node_new; // point tail to the new node
+    const node = new Node(value);
     this.length++;
+    if (!this.head) {
+     this.head = node;
+    }
+    else {
+      this.tail.next = node;
+    }
+    this.tail = node;
   }
   pop() {
-    if (!this.head) return null;  // empthy list
-    if (this.head === this.tail) { // there is only one node
-      const nodeToPop = this.head;
+    if (!this.head) return null;
+    if (this.head === this.tail) {
+      const node = this.head;
       this.head = this.tail = null;
-      return nodeToPop.value;
+      return node.value;
     }
     const penultimate = this._find(null, (value, nodeValue, i, current) => current.next === this.tail );
     const ans = penultimate.next.value;
@@ -58,7 +60,7 @@ class LinkedList {
     let current = this.head;
     let i = 0;
     while(current) {
-      if ( test(value, current.value, i, current) ) {
+      if (test(value, current.value, i, current)) {
         return current;
       }
       current = current.next;
